@@ -2,8 +2,9 @@ require 'spec_helper'
 
 RSpec.describe Bitnami::Ec2 do
   before(:all) do
-    aws_verbose
+    aws_stub_security_group
   end
+
   context '#credentials' do
     it 'has a valid credential' do
       expect(subject.credentials).to be_instance_of Aws::Credentials
@@ -27,9 +28,7 @@ RSpec.describe Bitnami::Ec2 do
   end
 
   context 'bitnami_security_group' do
-    before(:all) do
-      aws_stub_security_group
-    end
+
 
     context '#find_bitnami_security_group' do
       it 'returns the bitnami security group' do
@@ -83,6 +82,13 @@ RSpec.describe Bitnami::Ec2 do
         .and_call_original
       instance = subject.instance('i-1abc1234')
       expect(instance).to be_instance_of Aws::EC2::Instance
+    end
+  end
+
+  context '#wait_until' do
+    it 'wait until the instance is ready' do
+      expect(subject.client).to receive(:wait_until)
+      subject.wait_until(:instance_running, instance_ids: ['i-1abc1234'])
     end
   end
 end

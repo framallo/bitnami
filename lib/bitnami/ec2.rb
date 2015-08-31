@@ -60,6 +60,14 @@ module Bitnami
       ).first
     end
 
+    def wait_until(*args, &block)
+      client.wait_until(*args, &block)
+    end
+
+    def client
+      resource.client
+    end
+
     # def method_missing(method, *args, &block)
     #   resource.send(method, *args, &block)
     # end

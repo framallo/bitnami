@@ -28,5 +28,22 @@ module Bitnami
     def bitnami_amis
       { 'us-east-1' => 'ami-393c8c52' }
     end
+
+    def wait_until
+      ec2.client.wait_until(:instance_running, instance_ids: [id]) do |w|
+        w.before_wait do |attempts, response|
+          puts 'before_wait'
+          puts attempts.inspect
+          puts response.inspect
+          puts 'before_wait'
+        end
+        w.before_attempt do |attempts, response|
+          puts 'before_attempt'
+          puts attempts.inspect
+          puts response.inspect
+          puts 'before_attempt'
+        end
+      end
+    end
   end
 end
