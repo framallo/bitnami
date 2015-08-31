@@ -64,6 +64,10 @@ module Bitnami
       client.wait_until(*args, &block)
     end
 
+    def describe_instance_status(instance_id)
+      client.describe_instance_status(instance_ids: [instance_id])
+    end
+
     def client
       resource.client
     end

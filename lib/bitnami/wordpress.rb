@@ -45,5 +45,9 @@ module Bitnami
         end
       end
     end
+
+    def status
+      ec2.describe_instance_status(id) if id
+    end
   end
 end

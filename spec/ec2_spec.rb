@@ -91,4 +91,12 @@ RSpec.describe Bitnami::Ec2 do
       subject.wait_until(:instance_running, instance_ids: ['i-1abc1234'])
     end
   end
+
+  context '#describe_instance_status' do
+    it 'describe the status of an instance' do
+      expect(subject.client).to receive(:describe_instance_status)
+      subject.describe_instance_status('i-1abc1234')
+
+    end
+  end
 end

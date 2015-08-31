@@ -33,4 +33,17 @@ RSpec.describe Bitnami::Wordpress do
       described_class.new('i-1abc1234').create
     end
   end
+
+  context '#status' do
+    it 'returns the status of the instance' do
+      expect(subject.ec2).to receive(:describe_instance_status)
+        .and_call_original
+      subject.id = 'i-1abc1234'
+      subject.status
+    end
+
+    it 'works without id' do
+      expect { subject.status }.not_to raise_error
+    end
+  end
 end
