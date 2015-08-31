@@ -66,13 +66,22 @@ RSpec.describe Bitnami::Ec2 do
     end
   end
 
-  context '#instance' do
+  context '#create_instance' do
     it 'creates an EC2 instance' do
       aws_stub_create
       expect(subject.resource).to receive(:create_instances)
         .and_call_original
 
       instance = subject.create_instance('i-1abc1234')
+      expect(instance).to be_instance_of Aws::EC2::Instance
+    end
+  end
+
+  context '#instance' do
+    it 'finds an EC2 instance' do
+      expect(subject.resource).to receive(:instance)
+        .and_call_original
+      instance = subject.instance('i-1abc1234')
       expect(instance).to be_instance_of Aws::EC2::Instance
     end
   end
