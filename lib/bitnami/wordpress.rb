@@ -30,7 +30,7 @@ module Bitnami
     end
 
     def wait_until
-      ec2.client.wait_until(:instance_running, instance_ids: [id]) do |w|
+      ec2.wait_until(:instance_running, instance_ids: [id]) do |w|
         w.before_wait do |attempts, response|
           puts 'before_wait'
           puts attempts.inspect
