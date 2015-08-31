@@ -1,3 +1,12 @@
+module VerboseRequest
+  def call(options)
+    pp @method_name
+    req = super
+    pp req.to_hash
+    req
+  end
+end
+
 module AwsHelper
   def aws_enable
     WebMock.disable!
@@ -6,6 +15,11 @@ module AwsHelper
 
   def aws_disable
     WebMock.enable!
+  end
+
+  def aws_verbose
+    puts 'Aws is in verbose mode'
+    Aws::Resources::Request.prepend(VerboseRequest)
   end
 
   # pp the method in aws-sdk-resources-2.1.17/lib/aws-sdk-resources/request.rb @ line 24 Aws::Resources::Request#call:

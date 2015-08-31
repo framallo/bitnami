@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Bitnami::Ec2 do
   before(:all) do
+    aws_verbose
   end
   context '#credentials' do
     it 'has a valid credential' do
