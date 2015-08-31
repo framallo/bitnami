@@ -9,6 +9,7 @@ end
 
 module AwsHelper
   def aws_enable
+    aws_verbose
     WebMock.disable!
     Aws.config = {}
   end
