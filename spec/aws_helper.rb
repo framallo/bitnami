@@ -10,6 +10,7 @@ module AwsHelper
 
   # pp the method in aws-sdk-resources-2.1.17/lib/aws-sdk-resources/request.rb @ line 24 Aws::Resources::Request#call:
   def aws_stub
+    Aws.config[:stub_responses] ||= true
     Aws.config[:ec2] ||= {}
     Aws.config[:ec2][:stub_responses] ||= {}
     Aws.config[:ec2][:stub_responses]
@@ -20,12 +21,21 @@ module AwsHelper
       security_groups: [
         { owner_id: '123456789012',
           group_name: 'bitnami',
-          group_id: 'sg-d76624ba',
+          group_id: 'group-id',
           description: 'default to wordpress instances for bitnami app',
           ip_permissions: [],
           ip_permissions_egress: [] }]
     }
-    aws_stub[:create_security_group] = { group_id: 'sg-d76624ba' }
+    aws_stub[:create_security_group] = { group_id: 'group-id' }
+  end
+
+  def aws_stub_create
+    aws_stub[:run_instances] = {
+      reservation_id: 'reservation-id',
+      owner_id: '123456789012',
+      requester_id: '123456789012',
+      groups: [],
+      instances: [] }
   end
 end
 

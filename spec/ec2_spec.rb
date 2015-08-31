@@ -15,6 +15,16 @@ RSpec.describe Bitnami::Ec2 do
     end
   end
 
+  context 'settings' do
+    it 'returns a region' do
+      expect(subject.region).to eq('us-east-1')
+    end
+
+    it 'returns a group_name'do
+      expect(subject.group_name).to eq('bitnami')
+    end
+  end
+
   context 'bitnami_security_group' do
     before(:all) do
       aws_stub_security_group
@@ -33,7 +43,7 @@ RSpec.describe Bitnami::Ec2 do
       it 'creates the security group' do
         security_group = subject.create_bitnami_security_group
 
-        expect(security_group.group_id).to eq 'sg-d76624ba'
+        expect(security_group.group_id).to eq 'group-id'
       end
     end
 
@@ -52,6 +62,16 @@ RSpec.describe Bitnami::Ec2 do
 
         subject.bitnami_security_group
       end
+    end
+  end
+
+  context '#instance' do
+    it 'creates an EC2 instance' do
+      aws_stub_create
+      expect(subject.resource).to receive(:create_instances)
+        .and_call_original
+
+      subject.create_instance('12345')
     end
   end
 end
