@@ -27,7 +27,6 @@ module AwsHelper
     }
     aws_stub[:create_security_group] = { group_id: 'sg-d76624ba' }
   end
-
 end
 
 RSpec.configure do |config|
