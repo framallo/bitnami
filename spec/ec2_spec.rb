@@ -71,7 +71,8 @@ RSpec.describe Bitnami::Ec2 do
       expect(subject.resource).to receive(:create_instances)
         .and_call_original
 
-      subject.create_instance('12345')
+      instance = subject.create_instance('i-1abc1234')
+      expect(instance).to be_instance_of Aws::EC2::Instance
     end
   end
 end

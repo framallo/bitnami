@@ -35,7 +35,17 @@ module AwsHelper
       owner_id: '123456789012',
       requester_id: '123456789012',
       groups: [],
-      instances: [] }
+      instances: [{
+        instance_id: 'i-1abc1234',
+        image_id: 'ami-393c8c52',
+        state: { code: 16, name: 'running' },
+        private_dns_name: 'ip-127-0-0-1.us-east-1.compute.internal',
+        public_dns_name: '',
+        state_transition_reason: '',
+        key_name: 'bitnami',
+        ami_launch_index: 0,
+        product_codes: [],
+        instance_type: 't2.micro' }] }
   end
 end
 
