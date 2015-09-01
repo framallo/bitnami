@@ -1,11 +1,13 @@
 module Bitnami
   # bitnami Wordpress instance
   class Wordpress
+    Status = Struct.new(
+      :system_status, :instance_status, :state_name, :state_code)
+
     attr_accessor :instance, :id
 
     def initialize(id = nil)
       @id = id
-      # find(instance_id) if instance_id
     end
 
     def create
@@ -21,6 +23,10 @@ module Bitnami
       @id ||= (instance.id if instance)
     end
 
+    def find
+      @instance ||= (ec2.instance(id) if id)
+    end
+
     def image_id
       bitnami_amis[ec2.region]
     end
@@ -29,25 +35,17 @@ module Bitnami
       { 'us-east-1' => 'ami-393c8c52' }
     end
 
-    def wait_until
-      ec2.wait_until(:instance_running, instance_ids: [id]) do |w|
-        w.before_wait do |attempts, response|
-          puts 'before_wait'
-          puts attempts.inspect
-          puts response.inspect
-          puts 'before_wait'
-        end
-        w.before_attempt do |attempts, response|
-          puts 'before_attempt'
-          puts attempts.inspect
-          puts response.inspect
-          puts 'before_attempt'
-        end
-      end
-    end
-
     def status
-      ec2.describe_instance_status(id) if id
+      return unless id
+
+      r = ec2.describe_instance_status(id).instance_statuses[0]
+
+      Status.new(
+        r.system_status.details[0].status,
+        r.instance_status.details[0].status,
+        r.instance_state.name,
+        r.instance_state.code
+      )
     end
   end
 end

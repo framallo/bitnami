@@ -62,6 +62,25 @@ module AwsHelper
         product_codes: [],
         instance_type: 't2.micro' }] }
   end
+
+  def aws_stub_describe_instance_status
+    aws_stub[:describe_instance_status] = {
+      instance_statuses: [{
+        instance_id: 'i-1abc1234',
+        availability_zone: 'us-east-1e',
+        instance_state:  { code: 0, name: 'pending' },
+        system_status:   {
+          status: 'not-applicable',
+          details: [{
+            name: 'reachability', status: 'passed', impaired_since: nil
+          }] },
+        instance_status: {
+          status: 'not-applicable',
+          details: [{
+            name: 'reachability', status: 'passed', impaired_since: nil
+          }] } }]
+    }
+  end
 end
 
 RSpec.configure do |config|

@@ -28,8 +28,6 @@ RSpec.describe Bitnami::Ec2 do
   end
 
   context 'bitnami_security_group' do
-
-
     context '#find_bitnami_security_group' do
       it 'returns the bitnami security group' do
         security_group = subject.find_bitnami_security_group
@@ -96,7 +94,6 @@ RSpec.describe Bitnami::Ec2 do
     it 'describe the status of an instance' do
       expect(subject.client).to receive(:describe_instance_status)
       subject.describe_instance_status('i-1abc1234')
-
     end
   end
 end

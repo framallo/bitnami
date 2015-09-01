@@ -65,7 +65,9 @@ module Bitnami
     end
 
     def describe_instance_status(instance_id)
-      client.describe_instance_status(instance_ids: [instance_id])
+      client.describe_instance_status(
+        instance_ids: [instance_id],
+        include_all_instances: true)
     end
 
     def client
