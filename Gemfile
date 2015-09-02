@@ -9,6 +9,8 @@ gem 'redis'
 gem 'aws-sdk', '~> 2'
 gem 'dotenv'
 
+gem 'sidekiq'
+
 group :test do
   gem 'rspec'
   gem 'webmock'

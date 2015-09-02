@@ -35,6 +35,10 @@ module Bitnami
       { 'us-east-1' => 'ami-393c8c52' }
     end
 
+    def follow_status
+      WordpressStatusWorker.perform_async(id)
+    end
+
     def status
       return unless id
 
