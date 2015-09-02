@@ -50,7 +50,7 @@ You can launch a sidekiq worker to track the status of the instance
     w.create
     w.follow_status
 
-The `WordpressStatusWorker` should check every 5 seconds
+The `WordpressStatusWorker` should check every 5 seconds.
 
 # Run a console
 
