@@ -2,14 +2,15 @@ require 'rubygems'
 require 'simplecov'
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
+SimpleCov.start
 
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
-require 'spec_helper'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'spec_helper'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'bitnami'
 
 RSpec.describe Bitnami::Ec2 do
   before(:all) do
