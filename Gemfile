@@ -14,6 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'puma'
 gem 'redis'
 gem 'aws-sdk', '~> 2'
+gem 'sidekiq'
 
 gem 'rollbar', '~> 1.2.7'
 group :development, :test do
@@ -41,6 +42,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'fantaskspec'
   gem 'codeclimate-test-reporter'
+  gem 'webmock'
 end
 
 group :development do

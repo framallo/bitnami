@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'pry'
+require 'webmock'
 require 'webmock/rspec'
 require 'aws_helper'
 require 'dotenv'
