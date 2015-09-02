@@ -1,0 +1,29 @@
+development: &development
+  adapter: postgresql
+  database: bitnami_development
+  pool: 5
+  timeout: 5000
+  username:
+  password:
+  host:
+  encoding:
+
+staging:
+  database: bitnami_staging
+  <<: *development
+
+integration:
+  database: bitnami_integration
+  <<: *development
+
+test:
+  database: bitnami_test
+  <<: *development
+
+production:
+  database: bitnami_production
+  <<: *development
+
+cucumber:
+  database: bitnami_cucumber
+  <<: *development
