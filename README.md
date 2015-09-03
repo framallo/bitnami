@@ -71,4 +71,4 @@ Based on my research this is the time each AWS request takes from a t1.mcrio ins
 * create_instance ~ 1 second
 * describe_instance ~ 0.6 seconds, sometimes 0.3 seconds
 
-Usually, an instance takes around 5 minutes to initialize
+Usually, an instance takes around 8 minutes to initialize
