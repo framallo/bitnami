@@ -63,3 +63,12 @@ I use pry to run an interactive ruby console
 Sidekiq is designed to run with Rails. But you can make it run with ruby:
 
     bundle exec sidekiq -r ./worker.rb
+
+# Performance
+
+Based on my research this is the time each AWS request takes from a t1.mcrio instance
+
+* create_instance ~ 1 second
+* describe_instance ~ 0.6 seconds, sometimes 0.3 seconds
+
+Usually, an instance takes around 5 minutes to initialize
