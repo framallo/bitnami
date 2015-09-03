@@ -15,6 +15,7 @@ gem 'puma'
 gem 'redis'
 gem 'aws-sdk', '~> 2'
 gem 'sidekiq'
+gem 'devise'
 
 gem 'rollbar', '~> 1.2.7'
 group :development, :test do
