@@ -16,6 +16,7 @@ gem 'redis'
 gem 'aws-sdk', '~> 2'
 gem 'sidekiq'
 gem 'devise'
+gem 'attr_encrypted'
 
 gem 'rollbar', '~> 1.2.7'
 group :development, :test do
