@@ -56,7 +56,12 @@ RSpec.describe Bitnami::Wordpress do
   end
 
   describe '#find' do
-    pending 'finds an instance'
+    let(:id) { 'i-1abc1234' }
+    it 'finds an instance' do
+      subject = described_class.new(id)
+      expect(subject.ec2).to receive(:instance)
+      subject.find
+    end
   end
 end
 
