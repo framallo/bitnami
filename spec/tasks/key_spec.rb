@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'key:create' do
-  before { Bitnami::Application.load_tasks }
 
-  it do
+  it 'return a new key' do
     expect do
-      Rake::Task['key:create'].invoke
-    end.to output(/^[a-zA-Z\=0-9]{24}$/).to_stdout
+      subject.invoke
+    end.to output(/^[a-zA-Z\=0-9]{24}\n$/).to_stdout
   end
 end
