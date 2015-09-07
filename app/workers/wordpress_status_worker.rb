@@ -11,7 +11,7 @@ class WordpressStatusWorker
     continue = attempts < max_attempts
 
     puts "FetchStatusWorker #{id}"
-    pp Bitnami::Wordpress.new(id).status
+    pp Wordpress.find(id).actually_fetch_status
     puts
 
     self.class.perform_in(delay, id, attempts + 1) if continue
