@@ -4,8 +4,12 @@ require 'pry'
 require 'webmock'
 require 'webmock/rspec'
 require 'aws_helper'
+require 'sidekiq/testing'
+require 'database_cleaner'
 require 'dotenv'
 Dotenv.load
+Sidekiq::Testing.fake!
+DatabaseCleaner.strategy = :truncation
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

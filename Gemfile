@@ -45,6 +45,9 @@ group :test do
   gem 'fantaskspec'
   gem 'codeclimate-test-reporter'
   gem 'webmock'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 group :development do
