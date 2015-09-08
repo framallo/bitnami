@@ -6,8 +6,10 @@ module Bitnami
 
     attr_accessor :instance, :id
 
-    def initialize(id = nil)
+    def initialize(aws_access_key_id, aws_secret_access_key, id = nil)
       @id = id
+      @aws_access_key_id = aws_access_key_id
+      @aws_secret_access_key = aws_secret_access_key
     end
 
     def create
@@ -16,7 +18,7 @@ module Bitnami
     end
 
     def ec2
-      @ec2 ||= Ec2.new
+      @ec2 ||= Ec2.new(@aws_access_key_id, @aws_secret_access_key)
     end
 
     def id

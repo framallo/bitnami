@@ -8,6 +8,11 @@ RSpec.describe Bitnami::Wordpress do
     aws_stub_describe_instance_status
   end
 
+  let(:id) { nil }
+  let(:subject) do
+    described_class.new(aws_access_key_id, aws_secret_access_key, id)
+  end
+
   describe '#ec2' do
     it 'returns an Ec2 instance' do
       expect(subject.ec2).to be_instance_of(Bitnami::Ec2)
@@ -15,21 +20,24 @@ RSpec.describe Bitnami::Wordpress do
   end
 
   describe '#create' do
-    it 'creates an instance' do
-      expect(subject.ec2).to receive(:create_instance).and_call_original
-      subject.create
+    context 'without instance_id' do
+      let(:id) { nil }
+      it 'creates an instance' do
+        expect(subject.ec2).to receive(:create_instance).and_call_original
+        subject.create
+      end
     end
 
-    it 'does not create an instance' do
-      expect(subject.ec2).not_to receive(:create_instance)
-      described_class.new('i-1abc1234').create
+    context 'with instance_id' do
+      let(:id) { 'i-1abc1234' }
+      it 'does not create an instance' do
+        expect(subject.ec2).not_to receive(:create_instance)
+        subject.create
+      end
     end
   end
 
   describe '#status' do
-    let(:id) { nil }
-    subject { Bitnami::Wordpress.new(id) }
-
     context 'when it is an existing instance' do
       let(:id) { 'i-1abc1234' }
 
@@ -57,8 +65,8 @@ RSpec.describe Bitnami::Wordpress do
 
   describe '#find' do
     let(:id) { 'i-1abc1234' }
+
     it 'finds an instance' do
-      subject = described_class.new(id)
       expect(subject.ec2).to receive(:instance)
       subject.find
     end

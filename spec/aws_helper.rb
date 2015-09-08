@@ -81,6 +81,14 @@ module AwsHelper
           }] } }]
     }
   end
+
+  def aws_access_key_id
+    ENV['AWS_ACCESS_KEY_ID'] || 'AAAAAAAAAAAAAAAAAAAA'
+  end
+
+  def aws_secret_access_key
+    ENV['AWS_SECRET_ACCESS_KEY'] || '1aA11A/aaAAAaAAaaAAaaaa1aaAa1aaa1AAaaa11'
+  end
 end
 
 RSpec.configure do |config|
