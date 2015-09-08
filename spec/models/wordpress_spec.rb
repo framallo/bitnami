@@ -1,7 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Wordpress, type: :model do
-  let(:user) { create(:user) }
+  let(:user) do
+    user = build(:user)
+    user.aws_access_key_id = aws_access_key_id
+    user.aws_secret_access_key = aws_secret_access_key
+    user.save!
+    user
+  end
+
+  let(:wordpress_without_credentials) { build :wordpress_without_credentials }
   let(:subject) { build :wordpress }
 
   before(:each) do
@@ -9,12 +17,25 @@ RSpec.describe Wordpress, type: :model do
     aws_stub_describe_instance_status
   end
 
-  it 'belongs to user ' do
+  it 'belongs to user' do
     expect(subject).to belong_to :user
   end
 
   it 'requires a user' do
+    allow(subject).to receive(:user_must_have_credentials) { true }
     expect(subject).to validate_presence_of(:user)
+  end
+
+  context 'requires a user with credentials' do
+    it 'fails when the user does not have credentials' do
+      validation = wordpress_without_credentials.user_must_have_credentials
+
+      expect(validation).to be false
+    end
+
+    it 'fails when the user does not have credentials' do
+      expect(subject.user_must_have_credentials).to be true
+    end
   end
 
   context '#create_instance' do
