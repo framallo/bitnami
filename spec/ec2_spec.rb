@@ -18,7 +18,7 @@ RSpec.describe Bitnami::Ec2 do
 
   context '#new' do
     it 'requires access_key_id and secret_access_key' do
-      expect { described_class.new }.to raise_error
+      expect { described_class.new }.to raise_error ArgumentError
     end
   end
 
