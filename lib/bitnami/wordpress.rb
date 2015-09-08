@@ -35,20 +35,17 @@ module Bitnami
       { 'us-east-1' => 'ami-393c8c52' }
     end
 
-    def follow_status
-      WordpressStatusWorker.perform_async(id)
-    end
-
     def status
       return unless id
+      @status ||= fetch_status
+    end
 
+    def fetch_status
       r = ec2.describe_instance_status(id).instance_statuses[0]
-      system_status = r.system_status.details[0]
-      instance_status = r.instance_status.details[0]
 
       Status.new(
-        (system_status.status if system_status),
-        (instance_status.status if instance_status),
+        r.system_status.details[0].try(:status),
+        r.instance_status.details[0].try(:status),
         r.instance_state.name,
         r.instance_state.code
       )
