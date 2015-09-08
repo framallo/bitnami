@@ -10,9 +10,7 @@ class WordpressStatusWorker
     max_attempts = 40
     continue = attempts < max_attempts
 
-    puts "FetchStatusWorker #{id}"
-    pp Wordpress.find(id).actually_fetch_status
-    puts
+    Wordpress.find(id).actually_fetch_status
 
     self.class.perform_in(delay, id, attempts + 1) if continue
   end
