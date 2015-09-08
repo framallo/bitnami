@@ -22,7 +22,7 @@ class Wordpress < ActiveRecord::Base
   end
 
   def actually_fetch_status
-    self.status = instance.status.state
+    self.status = instance.status.system_status
     save!
   end
 

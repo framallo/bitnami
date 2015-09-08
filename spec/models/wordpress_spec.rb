@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Wordpress, type: :model do
   let(:user) { create(:user) }
-  let(:subject) { described_class.new user: user }
+  let(:subject) { build :wordpress }
 
   before(:each) do
     aws_stub_create
+    aws_stub_describe_instance_status
   end
 
   it 'belongs to user ' do
@@ -36,16 +37,42 @@ RSpec.describe Wordpress, type: :model do
       subject.save!
       CreateInstanceWorker.drain
       subject.reload
-      puts subject.instance_id
       expect(subject.instance_id).not_to be_nil
     end
   end
 
-  context '#actuall_create_instance' do
+  context '#actually_create_instance' do
     it 'actually creates an instance' do
       allow(subject.instance).to receive(:create)
         .and_call_original
       subject.actually_create_instance
+    end
+  end
+
+  context '#fetch_status' do
+    let(:subject) { create :wordpress_with_instance }
+
+    it 'creates a new worker' do
+      expect do
+        subject.fetch_status
+      end.to change(WordpressStatusWorker.jobs, :size).by(1)
+    end
+
+    it 'calls actually_fetch_status' do
+      allow_any_instance_of(described_class)
+        .to receive(:actually_fetch_status)
+      subject.fetch_status
+      WordpressStatusWorker.drain
+    end
+  end
+  context '#actually_fetch_status' do
+    let(:subject) { create :wordpress_with_instance }
+
+    it 'fetch status' do
+      allow_any_instance_of(subject.instance.class)
+        .to receive(:status)
+        .and_call_original
+      subject.actually_fetch_status
     end
   end
 end
