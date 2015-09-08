@@ -5,10 +5,15 @@ module Bitnami
   class Ec2
     attr_accessor :group_name, :region
 
+    def initialize(aws_access_key_id, aws_secret_access_key)
+      @aws_access_key_id = aws_access_key_id
+      @aws_secret_access_key = aws_secret_access_key
+    end
+
     def credentials
       @credentials ||= ::Aws::Credentials.new(
-        ENV['AWS_ACCESS_KEY_ID'],
-        ENV['AWS_SECRET_ACCESS_KEY'])
+        @aws_access_key_id,
+        @aws_secret_access_key)
     end
 
     def resource

@@ -5,6 +5,22 @@ RSpec.describe Bitnami::Ec2 do
   before(:all) do
     aws_stub_security_group
   end
+  let(:aws_access_key_id) do
+    ENV['AWS_ACCESS_KEY_ID'] || 'AAAAAAAAAAAAAAAAAAAA'
+  end
+  let(:aws_secret_access_key) do
+    ENV['AWS_SECRET_ACCESS_KEY'] || '1aA11A/aaAAAaAAaaAAaaaa1aaAa1aaa1AAaaa11'
+  end
+
+  let(:subject) do
+    described_class.new(aws_access_key_id, aws_secret_access_key)
+  end
+
+  context '#new' do
+    it 'requires access_key_id and secret_access_key' do
+      expect { described_class.new }.to raise_error
+    end
+  end
 
   context '#credentials' do
     it 'has a valid credential' do
