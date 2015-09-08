@@ -1,3 +1,6 @@
+[![Code Climate](https://codeclimate.com/github/framallo/bitnami/badges/gpa.svg)](https://codeclimate.com/github/framallo/bitnami)
+[![Test Coverage](https://codeclimate.com/github/framallo/bitnami/badges/coverage.svg)](https://codeclimate.com/github/framallo/bitnami/coverage)
+
 # bitnami instance manager
 
 This app allows you to launch bitnami instances with your AWS account.
